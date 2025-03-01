@@ -1,0 +1,26 @@
+[
+{
+  "model": "courses.subject",
+  "pk": 1,
+  "fields": {
+    "title": "e4 repertoire",
+    "slug": "e4-repertoire"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 2,
+  "fields": {
+    "title": "d4 repertoire",
+    "slug": "d4-repertoire"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 3,
+  "fields": {
+    "title": "c6 repertoire",
+    "slug": "c6-repertoire"
+  }
+}
+]
