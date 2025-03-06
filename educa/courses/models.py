@@ -26,6 +26,11 @@ class Course(models.Model):
     related_name='courses',
     on_delete=models.CASCADE
   )
+  students = models.ManyToManyField(
+    User,
+    related_name='courses_joined',
+    blank=True
+  )
   title = models.CharField(max_length=200)
   slug  = models.SlugField(max_length=200, unique=True)
   overview = models.TextField()
@@ -104,3 +109,6 @@ class Image(ItemBase):
 
 class Video(ItemBase):
   url  = models.URLField()
+
+
+
