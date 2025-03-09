@@ -41,23 +41,31 @@ class StudentCourseListView(LoginRequiredMixin, ListView):
     qs = super().get_queryset()
     return qs.filter(students__in=[self.request.user])
 
+from django.http import Http404
+
 class StudentCourseDetailView(LoginRequiredMixin, DetailView):
-  model = Course
-  template_name = 'students/course/detail.html'
-  
-  def get_queryset(self):
-    qs = super().get_queryset()
-    return qs.filter(students__in=[self.request.user])
+    model = Course
+    template_name = 'students/course/detail.html'
     
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)  
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(students__in=[self.request.user])
     
-    course = self.get_object()
-    if 'module_id' in self.kwargs:
-      context['module'] = course.modules.get(id=self.kwargs['module_id']) 
-    else:
-      context['module'] = course.modules.all()[0]
-    return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)  
+        
+        course = self.get_object()
+        modules = course.modules.all()
+
+        if 'module_id' in self.kwargs:
+            context['module'] = modules.filter(id=self.kwargs['module_id']).first()
+            if context['module'] is None:
+                raise Http404("Module not found")
+        else:
+            context['module'] = modules.first()  # Safe way to get first module
+        
+        return context
+
     
       
 
