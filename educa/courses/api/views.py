@@ -25,6 +25,7 @@ from courses.models import Course, Subject
 class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Course.objects.prefetch_related('modules')
     serializer_class = CourseSerializer
+    pagination_class = StandardPagination
     
     @action(detail=True, methods=['post'],authentication_classes=[BasicAuthentication],permission_classes=[IsAuthenticated])
     def enroll(self, request, *args, **kwargs):
